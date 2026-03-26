@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Company Scraper | Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+</head>
+<body class="dark-theme">
+    <div class="glow-overlay"></div>
+    
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar glass">
+            <div class="logo">
+                <span class="logo-icon">✨</span>
+                <h2>Scraper<span>Pro</span></h2>
+            </div>
+            
+            <nav>
+                <div class="nav-item active">
+                    <span class="icon">📊</span> Dashboard
+                </div>
+                <div class="nav-item">
+                    <span class="icon">📁</span> History
+                </div>
+                <div class="nav-item">
+                    <span class="icon">⚙️</span> Settings
+                </div>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="status-indicator">
+                    <div class="dot active"></div>
+                    <span>Engine Ready</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <header class="top-bar glass">
+                <div class="stats">
+                    <div class="stat-card">
+                        <span class="stat-label">Total Leads</span>
+                        <h3 id="stat-total">0</h3>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Processed</span>
+                        <h3 id="stat-processed" class="text-blue">0</h3>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Success Rate</span>
+                        <h3 id="stat-success" class="text-green">0%</h3>
+                    </div>
+                </div>
+                
+                <div class="user-profile">
+                    <div class="avatar">N</div>
+                </div>
+            </header>
+
+            <section class="dashboard-grid">
+                <!-- Control Card -->
+                <div class="card glass hero-card">
+                    <div class="card-header">
+                        <h2>Batch Processor</h2>
+                        <p>Upload your CSV and let the agents do the work.</p>
+                    </div>
+                    
+                    <div class="upload-zone" id="drop-zone">
+                        <div class="upload-content">
+                            <span class="upload-icon">📤</span>
+                            <p>Drag & Drop CSV or <strong>Browse</strong></p>
+                            <span class="file-info" id="file-name">No file selected</span>
+                        </div>
+                        <input type="file" id="file-input" hidden accept=".csv">
+                    </div>
+
+                    <div class="controls" id="scrape-controls" style="display: none;">
+                        <div class="config-row">
+                            <label>Business Name Column:</label>
+                            <select id="column-selector" class="glass-input"></select>
+                        </div>
+                        <div class="config-row">
+                            <label>Threads:</label>
+                            <input type="number" id="thread-count" value="10" class="glass-input small">
+                        </div>
+                        <button id="start-btn" class="btn btn-primary btn-glow">Start Engines</button>
+                    </div>
+                </div>
+
+                <!-- Progress Card -->
+                <div class="card glass progress-card">
+                    <div class="card-header">
+                        <h2>Scrape Progress</h2>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="progress-fill"></div>
+                        </div>
+                        <span class="progress-percent" id="progress-text">0%</span>
+                    </div>
+                    <div class="log-viewer glass-dark" id="log-list">
+                        <div class="log-entry system">System initialized. Waiting for input...</div>
+                    </div>
+                </div>
+
+                <!-- Results Table -->
+                <div class="card glass table-card">
+                    <div class="card-header">
+                        <h2>Live Results</h2>
+                        <button id="export-btn" class="btn btn-secondary btn-sm" disabled>Download CSV</button>
+                    </div>
+                    <div class="table-container">
+                        <table id="results-table">
+                            <thead>
+                                <tr>
+                                    <th>Company</th>
+                                    <th>Website</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Location</th>
+                                    <th>Socials</th>
+                                </tr>
+                            </thead>
+                            <tbody id="results-body">
+                                <!-- Dynamic Rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
