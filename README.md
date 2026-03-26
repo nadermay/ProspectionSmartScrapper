@@ -1,37 +1,46 @@
-# Smart Company Info Scraper
+# Prospection Smart Scraper CLI
 
-A Python-based web scraper that takes a company name, uses SerpApi to find its official website, and then crawls that website to extract the contact email and physical location.
+A powerful, concurrent Python-based lead enrichment tool that extracts contact data (Email, Phone, Location, Socials) from company websites.
+
+## Key Features
+- **Zero-Cost Discovery:** Uses Clearbit Autocomplete and DuckDuckGo for domain finding (No API keys required).
+- **Playwright Crawler:** Uses headless Chromium to handle JS-heavy websites.
+- **Concurrent Processing:** Multi-threaded batch scraping from CSV files.
+- **Clean Output:** Generates focused lead lists with only essential columns.
 
 ## Setup
 
-1. Create a virtual environment:
-   ```bash
+1. **Create and Activate Virtual Environment:**
+   ```powershell
    python -m venv .venv
+   .\.venv\Scripts\activate
    ```
 
-2. Activate the virtual environment:
-   - Windows: `.venv\Scripts\activate`
-   - Linux/Mac: `source .venv/bin/activate`
-
-3. Install dependencies:
-   ```bash
+2. **Install Dependencies:**
+   ```powershell
    pip install -r requirements.txt
+   playwright install chromium
    ```
-
-4. Set up environment variables:
-   - Copy `.env.example` to `.env`
-   - Add your SerpApi key to the `.env` file
 
 ## Usage
 
-Run the scraper with a company name:
-
-```bash
+### Single Company Scrape
+```powershell
 python scraper.py "Company Name"
 ```
 
-The script will:
-1. Find the official website using SerpApi
-2. Crawl the website to find contact information
-3. Extract email and location
-4. Save the results to `results.json`
+### Batch Processing (CSV)
+```powershell
+python scraper.py --csv "path/to/your/leads.csv" --threads 10 --out enriched_prospects.csv
+```
+
+The CSV must contain a **'Business Name'** column. The output will include:
+- Business Name
+- Phone
+- Email
+- Location
+- Website
+- Socials (LinkedIn, Facebook, Twitter, Instagram)
+
+## Output
+The results are saved to `enriched_prospects.csv` by default.
